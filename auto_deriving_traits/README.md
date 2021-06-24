@@ -3,7 +3,7 @@ Very important feature in rust are traits.
 
 Traits allow to re-use code accross different data types, which I think is very powerful.
 
-## What Deref is?
+## What is Deref?
 Deref is a trait that includes the deref function. *deref* gets invoked when using the "*" operator.
 
 By implementing this function one can have complex data types with custom behaviour.
