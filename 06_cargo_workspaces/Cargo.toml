@@ -1,0 +1,8 @@
+# After adding the following line then cargo recognizes the workspaces.
+[workspace]
+members = [
+    "child1",
+    "child2"
+]
+
+# And no... you can't have a package defined in this Cargo, so there can't be an executable here at this level.
