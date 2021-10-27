@@ -10,6 +10,11 @@ I had a couple of issues getting the dependencies right, you may find this worki
 ## Compilation
 Just compile via the usual
 ```bash
+# Make sure you have the following system dependencies:
+# For Ubuntu...
+sudo apt-get install -y libssl-dev pkg-config
+
+# then just...
 cargo run
 ```
 
