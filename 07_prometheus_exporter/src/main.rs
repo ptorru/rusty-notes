@@ -1,10 +1,7 @@
 // Will create an exporter with a single metric that will randomize the value
 // of the metric everytime the exporter duration times out.
 
-use env_logger::{
-    Builder,
-    Env,
-};
+use env_logger::{Builder, Env};
 use log::info;
 use prometheus_exporter::prometheus::register_gauge;
 use rand::Rng;
