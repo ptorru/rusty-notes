@@ -3,6 +3,10 @@ use tonic::{transport::Server, Request, Response, Status};
 use greeter::greeter_server::{Greeter, GreeterServer};
 use greeter::{HelloResponse, HelloRequest};
 
+use tempfile::tempfile;
+use tempfile::NamedTempFile;
+use std::io::{self, Write, Read};
+
 // Import the generated proto-rust file into a module
 pub mod greeter {
     tonic::include_proto!("greeter");
@@ -24,7 +28,21 @@ impl Greeter for MyGreeter {
         println!("Received request from: {:?}", request);
 
         let packet = request.into_inner();
-        println!("vec is {:?}", packet.file);
+
+        // Create a file inside of `std::env::temp_dir()`.
+        let mut file1 = NamedTempFile::new()?;
+
+        // Write some test data to the first handle.
+        file1.write_all(&packet.file)?;
+
+        // Re-open it.
+        let mut file2 = file1.reopen()?;
+
+        // Read the test data using the second handle.
+        let mut buf = String::new();
+        file2.read_to_string(&mut buf)?;
+
+        println!("{}", buf);
 
         let response = greeter::HelloResponse {
             message: format!("Hello {}!", packet.name).into(),
