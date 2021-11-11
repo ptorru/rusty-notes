@@ -3,8 +3,9 @@ use tonic::{transport::Server, Request, Response, Status};
 use greeter::greeter_server::{Greeter, GreeterServer};
 use greeter::{HelloResponse, HelloRequest};
 
-use tempfile::tempfile;
-use tempfile::NamedTempFile;
+use tempfile::{tempfile, NamedTempFile};
+use std::fs::File;
+use tar::Archive;
 use std::io::{self, Write, Read};
 
 // Import the generated proto-rust file into a module
@@ -36,7 +37,14 @@ impl Greeter for MyGreeter {
         file1.write_all(&packet.file)?;
 
         // Re-open it.
-        let mut file2 = file1.reopen()?;
+        let file2 = file1.reopen()?;
+
+        // Now extract the contents of the tar:
+        let mut ar = Archive::new(file2);
+        ar.unpack("server_tmp").unwrap();
+
+        // Re-open it.
+        let mut file2 = File::open("server_tmp/myfile.txt")?;
 
         // Read the test data using the second handle.
         let mut buf = String::new();
