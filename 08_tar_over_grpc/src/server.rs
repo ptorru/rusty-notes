@@ -1,12 +1,12 @@
 use tonic::{transport::Server, Request, Response, Status};
 
 use greeter::greeter_server::{Greeter, GreeterServer};
-use greeter::{HelloResponse, HelloRequest};
+use greeter::{HelloRequest, HelloResponse};
 
-use tempfile::{tempfile, NamedTempFile};
 use std::fs::File;
+use std::io::{Read, Write};
 use tar::Archive;
-use std::io::{self, Write, Read};
+use tempfile::NamedTempFile;
 
 // Import the generated proto-rust file into a module
 pub mod greeter {
@@ -53,7 +53,7 @@ impl Greeter for MyGreeter {
         println!("{}", buf);
 
         let response = greeter::HelloResponse {
-            message: format!("Hello {}!", packet.name).into(),
+            message: format!("Hello {}!", packet.name),
         };
 
         Ok(Response::new(response))
