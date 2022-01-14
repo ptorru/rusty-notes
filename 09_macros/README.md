@@ -30,6 +30,16 @@ I would like to explore the other types too.
 
 So, in this example, what I achieved was to be able to declare a couple of macros, one of them will create a new struct type, this definition does include a call to another macro to derive its debug string generator. The second macro does a trait implementation for that new type.
 
+## Running the code
+
+```bash
+# This is a longer version with my initial test
+cargo run --bin long
+
+# Shorter prettier version
+cargo run --bin short
+```
+
 # Conclusion
 This is a very powerful feature! Of course very powerful to avoid code repetition, but I can see how this is critical. In a language that is so strongly typed, you certainly need facilities to be able to generate code with generic types, this is how Rust becomes more productive and it does not force you to write everything unlike other languages.
 
